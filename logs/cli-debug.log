@@ -1,0 +1,23 @@
+2018-12-02 07:14:50 Notice: Notice (8): Undefined index: Data in [C:\xampp\htdocs\Dropbox\adminexcel\vendor\cakephp\bake\src\View\Helper\DocBlockHelper.php, line 238]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE\src\Error\BaseErrorHandler.php, line 159
+Bake\View\Helper\DocBlockHelper::buildTableAnnotations() - ROOT\vendor\cakephp\bake\src\View\Helper\DocBlockHelper.php, line 238
+Twig_Template::getAttribute() - ROOT\vendor\twig\twig\lib\Twig\Template.php, line 679
+__TwigTemplate_dab7b3dc6f6e462a9419645e260979c9e79998892b11f863b90146ffb872af9a::doDisplay() - ROOT\tmp\cache\twigView\7c\7c53eabb971ba45d60dc2ae7c783d8e8e99e3b4141b43730430076c37532b7ea.php, line 22
+Twig_Template::displayWithErrorHandling() - ROOT\vendor\twig\twig\lib\Twig\Template.php, line 432
+Twig_Template::display() - ROOT\vendor\twig\twig\lib\Twig\Template.php, line 403
+Twig_Template::render() - ROOT\vendor\twig\twig\lib\Twig\Template.php, line 411
+WyriHaximus\TwigView\View\TwigView::_render() - ROOT\vendor\wyrihaximus\twig-view\src\View\TwigView.php, line 180
+Bake\View\BakeView::render() - ROOT\vendor\cakephp\bake\src\View\BakeView.php, line 146
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT\vendor\cakephp\bake\src\Shell\Task\BakeTemplateTask.php, line 91
+Bake\Shell\Task\ModelTask::bakeTable() - ROOT\vendor\cakephp\bake\src\Shell\Task\ModelTask.php, line 956
+Bake\Shell\Task\ModelTask::bake() - ROOT\vendor\cakephp\bake\src\Shell\Task\ModelTask.php, line 114
+Bake\Shell\Task\ModelTask::main() - ROOT\vendor\cakephp\bake\src\Shell\Task\ModelTask.php, line 100
+Cake\Console\Shell::runCommand() - CORE\src\Console\Shell.php, line 532
+Cake\Console\Shell::runCommand() - CORE\src\Console\Shell.php, line 525
+Cake\Console\CommandRunner::runShell() - CORE\src\Console\CommandRunner.php, line 342
+Cake\Console\CommandRunner::run() - CORE\src\Console\CommandRunner.php, line 164
+[main] - ROOT\bin\cake.php, line 12
+
+
+
