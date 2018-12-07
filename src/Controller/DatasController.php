@@ -258,6 +258,17 @@ class DatasController extends AppController {
         $this->set('form2', $this->form2);
         $this->set('form3', $this->form3);
     }
+    
+    public function mapView($sheetId=null){
+        $q = $this->DataSheets->find()
+                ->contain(['DataRows'])
+                ->where(['id'=>$sheetId]);
+        $sheet = $q->first();
+        $json = json_encode($sheet->data_rows);
+        $json = str_replace("'", "\'", $json);
+        $this->set(compact('sheet','json'));
+        
+    }
 
     public function form1() {
         $this->autoRender = false;

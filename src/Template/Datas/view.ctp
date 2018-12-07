@@ -49,6 +49,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive text-nowrap" data-pattern="priority-columns">
+                                            <?=$this->Html->link('<i class="mdi mdi-google-maps"></i> Map',['controller'=>'datas','action'=>'map-view',$item['id']],['escape'=>false,'class'=>'btn btn-secondary waves-effect m-b-5','target'=>'_blank'])?>
                                             <table id="" class="table table-sm table-bordered" style="font-size: 12px;">
                                                 <thead>
                                                     <?php
