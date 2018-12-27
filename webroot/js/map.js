@@ -77,3 +77,22 @@ function addNewMarker(lat, lng,name) {
         }
     });
 }
+
+function addNewMarkerBlue(lat, lng, name) {
+    console.log(lat);
+    var myLatLng = new google.maps.LatLng(lat, lng);
+    var assetMarker = new google.maps.Marker({
+        map: map,
+        draggable: false,
+        animation: google.maps.Animation.DROP,
+        position: myLatLng,
+        label: {
+            text: name,
+            color: "#424242",
+            fontWeight: "bold"
+        },
+        icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        }
+    });
+}

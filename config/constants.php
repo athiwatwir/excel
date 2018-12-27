@@ -1,7 +1,7 @@
 <?php
 
 define('DEFAULT_USER', '0');
-define('PAGE_TITLE', 'Excel');
+define('PAGE_TITLE', 'Soil and Water Database System');
 define('MAP_API_KEY', 'AIzaSyBlBNYnIC9qGPT2dEMmbpnPFMYtFbqaXpM');
 define('SITE_KEY', '6LcxcHMUAAAAACFCZBRN-MzxKnmT9uz85pHPTzou');
 define('SECret_KEY', '6LcxcHMUAAAAALuuubeb06bm5wPzlsnuf-V7PP1B');

@@ -88,7 +88,7 @@
                                                             ?>
                                                             <tr>
                                                                 <td><?= $itemtr->seq ?></td>
-                                                                <td><?= $itemtr->office_center ?></td>
+                                                                <td><?= $itemtr->fullname ?></td>
                                                                 <td><?= $itemtr->year ?></td>
                                                                 <?php if (($itemtr->ppm_cd ) > $form2['calculat'][3]) { ?> 
                                                                     <td style="background-color: #FF0000;"><?= $itemtr->ppm_cd ?></td>
@@ -138,7 +138,7 @@
                                                             ?>
                                                             <tr>
                                                                 <td><?= $itemtr->seq ?></td>
-                                                                <td><?= $itemtr->office_center ?></td>
+                                                                <td><?= $itemtr->fullname ?></td>
                                                                 <td><?= $itemtr->year ?></td>
                                                                 <?php if (($itemtr->chemical_do ) < $form3['calculat'][3]) { ?> 
                                                                 <td style="background-color: #FF0000;"><?= $itemtr->chemical_do ?></td>

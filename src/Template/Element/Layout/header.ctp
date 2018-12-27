@@ -46,10 +46,13 @@
             <div id="navigation">
                 <ul class="navigation-menu">
                     <li class="has-submenu">
-                        <?=$this->Html->link(' <i class="fa fa-cloud-upload"></i><span> อัพโหลดข้อมูล </span>',['controller'=>'datas','action'=>'upload'],['escape'=>false,'class'=>'waves-effect waves-primary'])?>
+                        <?=$this->Html->link(' <i class="fa fa-cloud-upload"></i><span> อัพโหลดข้อมูล </span>',['controller'=>'upload'],['escape'=>false,'class'=>'waves-effect waves-primary'])?>
                     </li>
                     <li class="has-submenu">
                         <?=$this->Html->link('<i class="fa fa-history"></i><span> ประวัติการอัพโหลดข้อมูล </span>',['controller'=>'datas'],['class'=>'waves-effect waves-primary','escape'=>false])?>
+                    </li>
+                    <li class="has-submenu">
+                        <?=$this->Html->link('<i class="fa fa-pie-chart"></i><span> รายงาน </span>',['controller'=>'reports'],['class'=>'waves-effect waves-primary','escape'=>false])?>
                     </li>
                 </ul>
             </div> 

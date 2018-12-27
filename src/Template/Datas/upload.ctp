@@ -1,9 +1,13 @@
+
+<?= $this->Html->css('/assetdist/plugins/dropzone/dist/dropzone.css')?>
 <?= $this->element('Lib/data_table') ?>
 
 <?= $this->Form->create('', ['id' => 'data', 'type' => 'file']) ?>
 <div class="row m-t-70">
 
-    <div class="col-md-6">
+    
+
+    <div class="col-12">
         <div class="card m-b-20 card-body">
 
             <div class="form-group row ">
@@ -14,7 +18,7 @@
             <div class="row">
                 <div class="form-group col-12">
                     <label class="col-form-label">Upload File</label>
-                    <?= $this->Form->control('uploadfile', ['id' => 'filein', 'type' => 'file', 'class' => 'form-control', 'label' => false]) ?>
+                    <?= $this->Form->control('uploadfile', ['id' => 'filein', 'type' => 'file', 'class' => 'form-control', 'label' => false,'multiple'=>'multiple','accept'=>'.xlsx, .xls']) ?>
                 </div>
 
                 <div class="col-lg-12 text-right" style="<?= $displaynone ?>">
@@ -27,21 +31,21 @@
 
 
 
-    <div class="col-md-6">
+    <div class="col-12">
         <div class="card m-b-20 card-body">
             <div class="form-group row ">
                 <div class="col-12 ">
                     <h2 class="prompt-400 "><i class="fa fa-file-excel-o"></i> Excel Template </h2>
                     <ol>
-                        <li>Template 1 <?=$this->Html->link('ดูตัวอย่าง','javascript::void(0)',[])?></li>
-                        <li>Template 2 <?=$this->Html->link('ดูตัวอย่าง','javascript::void(0)',[])?></li>
-                        <li>Template 3 <?=$this->Html->link('ดูตัวอย่าง','javascript::void(0)',[])?></li>
+                        <li>Template 1 <?= $this->Html->link('ดูตัวอย่าง', 'javascript::void(0)', []) ?></li>
+                        <li>Template 2 <?= $this->Html->link('ดูตัวอย่าง', 'javascript::void(0)', []) ?></li>
+                        <li>Template 3 <?= $this->Html->link('ดูตัวอย่าง', 'javascript::void(0)', []) ?></li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-    <?php if (isset($result) && sizeof($result) >0) { ?>
+    <?php if (isset($result) && sizeof($result) > 0) { ?>
         <div class="col-12">
             <div class="card m-b-20 card-body">
                 <div class="form-group col-lg-12">
@@ -173,6 +177,8 @@
 
 </div>
 <?= $this->Form->end() ?>
+
+<?=$this->Html->script('/assetdist/plugins/dropzone/dist/dropzone.js')?>
 
 <script>
     $(document).ready(function () {

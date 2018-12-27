@@ -15,7 +15,7 @@
         <?= $this->Html->css('/assetdist/plugins/bootstrap-sweetalert/sweet-alert.css') ?>
         <?= $this->Html->css('/assetdist/plugins/jquery-circliful/css/jquery.circliful.css') ?>
 
-        <?= $this->Html->css('/assetdist/css/bootstrap.min.css') ?>
+        <?= $this->Html->css('/assetdist/css/bootstrap.css') ?>
         <?= $this->Html->css('/assetdist/css/icons.css') ?>
         <?= $this->Html->css('/assetdist/css/style.css') ?>
         <?= $this->Html->script('/assetdist/js/modernizr.min.js'); ?>
@@ -26,11 +26,7 @@
     <body style="padding-bottom: 0px;">
 
 
-        <div class="">
-            
-            <?= $this->fetch('content') ?>
-
-        </div>
+        <?= $this->fetch('content') ?>
 
         <script>
 

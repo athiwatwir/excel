@@ -8,4 +8,4 @@ define('DB_PASS', 'Korn@001');
 
 
 
-define('SITE_URL', 'http://127.0.0.1/Dropbox/adminexcel/');
+define('SITE_URL', 'http://localhost:8888/Dropbox/adminexcel/');

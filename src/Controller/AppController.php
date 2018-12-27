@@ -55,10 +55,7 @@ class AppController extends Controller {
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
-       // $this->loadComponent('Sendemail');
-       // $this->loadComponent('Authen');
-//        $this->loadComponent('Core');
-//        $this->loadComponent('Util');
+        $this->loadComponent('Util');
         $this->loadComponent('Auth', [
             'loginAction' => [
                 'controller' => 'login',

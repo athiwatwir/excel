@@ -16,13 +16,12 @@ use Cake\Network\Email\Email;
 class LoginController extends AppController {
 
     public $Users = null;
-    public $SystemUsages = null;
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
 
         $this->Users = TableRegistry::get('Users');
-        $this->SystemUsages = TableRegistry::get('SystemUsages');
+        
     }
 
     public function index() {
