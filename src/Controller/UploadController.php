@@ -70,8 +70,15 @@ class UploadController extends AppController {
         
         $excelData = $this->Excel->readToArray($file->path,$fileName);
         //debug($excelData);
-        $dataId = $this->ExcelTemplate->process($excelData);
-        $res = ['status'=>200,'message'=>'','data'=>['data_id'=>$dataId]];
+        $_res = $this->ExcelTemplate->process($excelData);
+        $dataId = '';
+        if($_res['status'] == 200){
+            $dataId = $_res['data_id'];
+            $res = ['status'=>200,'message'=>'','data'=>['data_id'=>$dataId]];
+        }else{
+            $res = $_res;
+        }
+        
 
         $file->delete();
         //$this->log($file,'debug');

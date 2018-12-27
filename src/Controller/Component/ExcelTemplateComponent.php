@@ -31,6 +31,7 @@ class ExcelTemplateComponent extends Component {
         $this->DataSheets = TableRegistry::get('DataSheets');
 
         $dataId = $this->createData($excelData['file_name']);
+        $res = ['data_id'=>$dataId,'status'=>200,'message'=>''];
         foreach ($excelData['sheets'] as $key => $sheet) {
             if ($sheet['highest_column'] == $this->soilColumn) {
                 $template = $this->templateSoil();
@@ -45,7 +46,7 @@ class ExcelTemplateComponent extends Component {
                 unset($rows[2]);
                 unset($rows[3]);
                 unset($rows[4]);
-                
+
                 $count = 1;
                 foreach ($rows as $key_row => $row) {
                     $fullname = $row[1];
@@ -72,18 +73,67 @@ class ExcelTemplateComponent extends Component {
                     $coordinates_n = $row[22];
                     $high = $row[21];
                     $area_number = $row[22];
-                    $count++; 
-                    
+                    $count++;
+
                     $this->createDataRow($fullname, $dataSheetId, $count, null, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, $gen_ph, $gen_om, $gen_n, $gen_p, $gen_k, $oc_item, $oc_weight, $py_item, $py_weight, $op_item, $op_weight, $ca_item, $ca_weight, $coordinates_e, $coordinates_n, $high, $area_number, null, null, null, null, null, null, null);
                 }
             } elseif ($sheet['highest_column'] == $this->waterColumn) {
-                
-            }else{
-                
+                $template = $this->templateWater();
+
+                //Get title
+                $title = $sheet['rows'][0][0];
+
+                $dataSheetId = $this->createDataSheet($sheet['sheet_name'], ($key + 1), $title, $dataId, 'WATER');
+                $rows = $sheet['rows'];
+                unset($rows[0]);
+                unset($rows[1]);
+                unset($rows[2]);
+                unset($rows[3]);
+                unset($rows[4]);
+
+                $count = 1;
+                foreach ($rows as $key_row => $row) {
+                    $fullname = $row[1];
+                    $year = $row[2];
+                    $chemical_do = $row[3];
+                    $chemical_bod = $row[4];
+                    $chemical_no3n = $row[5];
+                    $chemical_nh3n = $row[6];
+                    $oc_weight = $row[7];
+                    $op_weight = $row[8];
+                    $ca_weight = $row[9];
+                    $py_weight = $row[10];
+                    $ppm_cd = $row[11];
+                    $ppm_cr = $row[12];
+                    $ppm_pb = $row[13];
+                    $ppm_hg = $row[14];
+                    $ppm_as = $row[15];
+                    $nutrient_cu = $row[16];
+                    $nutrient_ca = $row[17];
+                    $coliform = $row[18];
+                    $fecal = $row[19];
+                    $coordinates_e = $row[20];
+                    $coordinates_n = $row[21];
+                    $high = $row[22];
+                    $count++;
+
+                    $this->createDataRow($fullname, $dataSheetId, $count, null, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, null, 
+                            null, null, null, null, null, $oc_weight, null, $py_weight, null, $op_weight, null, $ca_weight, $coordinates_e,
+                            $coordinates_n, $high, null, null, null, null, $nutrient_cu, $nutrient_ca, $coliform, $fecal, $chemical_do,
+                            $chemical_bod, $chemical_no3n, $chemical_nh3n);
+                    
+                }
+            } else {
+                $res['status'] = 500;
+                $res['message'] = 'รูปแบบเอกสารไม่ถูกต้อง';
+                $res['data_id'] = '';
+                $data = $this->Datas->get($dataId);
+                $this->Datas->delete($data);
+                return $res;
             }
         }
-        
-        return $dataId;
+
+        return $res;
     }
 
     private function createData($name) {
@@ -110,8 +160,11 @@ class ExcelTemplateComponent extends Component {
         }
     }
 
-    private function createDataRow($fullname, $data_sheet_id, $seq, $office_center, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, $gen_ph, $gen_om, $gen_n, $gen_p, $gen_k, $oc_item, $oc_weight, $py_item, $py_weight, $op_item, $op_weight, $ca_item, $ca_weight, $coordinates_e, $coordinates_n, $high, $area_number, $farmer_code, $code, $plant_type, $nutrient_cu, $nutrient_ca, $coliform, $fecal) {
-
+    private function createDataRow($fullname, $data_sheet_id, $seq, $office_center, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, $gen_ph, $gen_om, $gen_n, $gen_p, $gen_k, $oc_item, $oc_weight, $py_item, $py_weight, $op_item, $op_weight, $ca_item, $ca_weight, $coordinates_e, $coordinates_n, $high, $area_number, $farmer_code, $code, $plant_type, $nutrient_cu, $nutrient_ca, $coliform, $fecal,$chemical_do=null,
+            $chemical_bod=null,$chemical_no3n=null,$chemical_nh3n=null) {
+        if(is_null($fullname)){
+            $fullname = '-';
+        }
         $dataRow = $this->DataRows->newEntity();
         $dataRow->fullname = $fullname;
         $dataRow->data_sheet_id = $data_sheet_id;
@@ -147,6 +200,10 @@ class ExcelTemplateComponent extends Component {
         $dataRow->nutrient_ca = $nutrient_ca;
         $dataRow->coliform = $coliform;
         $dataRow->fecal = $fecal;
+        $dataRow->chemical_do = $chemical_do;
+        $dataRow->chemical_bod = $chemical_bod;
+        $dataRow->chemical_no3n = $chemical_no3n;
+        $dataRow->chemical_nh3n = $chemical_nh3n;
         if ($this->DataRows->save($dataRow)) {
             return $dataRow->id;
         }

@@ -57,7 +57,7 @@
                             <tr data-name="<?=$file?>" data-task="<?=$taskId?>">
                                 <td><?= h($key + 1) ?></td>
                                 <td><?= h($file) ?></td>
-                                <td data-id="status">กำลังบันทึก...</td>
+                                <td data-id="status">กำลังบันทึก กรุณารอสักครู่...</td>
                                 <td data-id="button"></td>
                                 <td data-id="msg"></td>
                             </tr>
@@ -85,8 +85,13 @@
                     var json = JSON.parse(data);
                     console.log(json);
                     if(json.status == 200){
-                        objRow.find('td[data-id="status"]').text('เสร็จแล้ว');
+                        objRow.find('td[data-id="status"]').text('');
+                        objRow.find('td[data-id="status"]').append('<span class="text-success">เสร็จแล้ว</span>');
                         objRow.find('td[data-id="button"]').append('<a class="btn btn-sm btn-success waves-effect waves-light" href="'+siteurl+'datas/view/'+json.data.data_id+'" target="_blank">View</a>');
+                    }else{
+                        objRow.find('td[data-id="status"]').text('');
+                        objRow.find('td[data-id="status"]').append('<span class="text-danger">ผิดพลาด</span>');
+                        objRow.find('td[data-id="msg"]').text(json.message);
                     }
                 });
             });
