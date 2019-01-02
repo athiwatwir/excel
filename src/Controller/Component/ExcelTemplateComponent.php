@@ -19,6 +19,7 @@ class ExcelTemplateComponent extends Component {
 
     public $soilColumn = 25;
     public $waterColumn = 23;
+    public $plantColumn = 11;
     public $DataRows = null;
     public $DataSheets = null;
     public $Datas = null;
@@ -31,7 +32,7 @@ class ExcelTemplateComponent extends Component {
         $this->DataSheets = TableRegistry::get('DataSheets');
 
         $dataId = $this->createData($excelData['file_name']);
-        $res = ['data_id'=>$dataId,'status'=>200,'message'=>''];
+        $res = ['data_id' => $dataId, 'status' => 200, 'message' => ''];
         foreach ($excelData['sheets'] as $key => $sheet) {
             if ($sheet['highest_column'] == $this->soilColumn) {
                 $template = $this->templateSoil();
@@ -73,9 +74,11 @@ class ExcelTemplateComponent extends Component {
                     $coordinates_n = $row[22];
                     $high = $row[21];
                     $area_number = $row[22];
-                    $count++;
+
 
                     $this->createDataRow($fullname, $dataSheetId, $count, null, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, $gen_ph, $gen_om, $gen_n, $gen_p, $gen_k, $oc_item, $oc_weight, $py_item, $py_weight, $op_item, $op_weight, $ca_item, $ca_weight, $coordinates_e, $coordinates_n, $high, $area_number, null, null, null, null, null, null, null);
+
+                    $count++;
                 }
             } elseif ($sheet['highest_column'] == $this->waterColumn) {
                 $template = $this->templateWater();
@@ -115,13 +118,37 @@ class ExcelTemplateComponent extends Component {
                     $coordinates_e = $row[20];
                     $coordinates_n = $row[21];
                     $high = $row[22];
-                    $count++;
 
-                    $this->createDataRow($fullname, $dataSheetId, $count, null, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, null, 
-                            null, null, null, null, null, $oc_weight, null, $py_weight, null, $op_weight, null, $ca_weight, $coordinates_e,
-                            $coordinates_n, $high, null, null, null, null, $nutrient_cu, $nutrient_ca, $coliform, $fecal, $chemical_do,
-                            $chemical_bod, $chemical_no3n, $chemical_nh3n);
-                    
+
+                    $this->createDataRow($fullname, $dataSheetId, $count, null, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, null, null, null, null, null, null, $oc_weight, null, $py_weight, null, $op_weight, null, $ca_weight, $coordinates_e, $coordinates_n, $high, null, null, null, null, $nutrient_cu, $nutrient_ca, $coliform, $fecal, $chemical_do, $chemical_bod, $chemical_no3n, $chemical_nh3n);
+                    $count++;
+                }
+            } elseif ($sheet['highest_column'] == $this->plantColumn) {
+                //Get title
+                $title = $sheet['rows'][0][0];
+
+                $dataSheetId = $this->createDataSheet($sheet['sheet_name'], ($key + 1), $title, $dataId, 'PLANT');
+                $rows = $sheet['rows'];
+                unset($rows[0]);
+                unset($rows[1]);
+                unset($rows[2]);
+                unset($rows[3]);
+                $count = 1;
+                foreach ($rows as $key_row => $row) {
+                    $office_center = $row[1];
+                    $fullname = $row[2];
+                    $farmer_code = $row[3];
+                    $code = $row[4];
+                    $year = $row[5];
+                    $plant_type = $row[6];
+                    $ppm_as = $row[7];
+                    $ppm_cd = $row[8];
+                    $ppm_pb = $row[9];
+                    $description = $row[10];
+
+                    $this->createDataRow($fullname, $dataSheetId, $count, $office_center, $year, $ppm_cd, null, $ppm_pb, null, $ppm_as, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $farmer_code, $code, $plant_type, null, null, null, null, null, null, null, null, $description);
+
+                    $count++;
                 }
             } else {
                 $res['status'] = 500;
@@ -160,9 +187,8 @@ class ExcelTemplateComponent extends Component {
         }
     }
 
-    private function createDataRow($fullname, $data_sheet_id, $seq, $office_center, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, $gen_ph, $gen_om, $gen_n, $gen_p, $gen_k, $oc_item, $oc_weight, $py_item, $py_weight, $op_item, $op_weight, $ca_item, $ca_weight, $coordinates_e, $coordinates_n, $high, $area_number, $farmer_code, $code, $plant_type, $nutrient_cu, $nutrient_ca, $coliform, $fecal,$chemical_do=null,
-            $chemical_bod=null,$chemical_no3n=null,$chemical_nh3n=null) {
-        if(is_null($fullname)){
+    private function createDataRow($fullname, $data_sheet_id, $seq, $office_center, $year, $ppm_cd, $ppm_cr, $ppm_pb, $ppm_hg, $ppm_as, $gen_ph, $gen_om, $gen_n, $gen_p, $gen_k, $oc_item, $oc_weight, $py_item, $py_weight, $op_item, $op_weight, $ca_item, $ca_weight, $coordinates_e, $coordinates_n, $high, $area_number, $farmer_code, $code, $plant_type, $nutrient_cu, $nutrient_ca, $coliform, $fecal, $chemical_do = null, $chemical_bod = null, $chemical_no3n = null, $chemical_nh3n = null, $description = null) {
+        if (is_null($fullname)) {
             $fullname = '-';
         }
         $dataRow = $this->DataRows->newEntity();
@@ -204,6 +230,7 @@ class ExcelTemplateComponent extends Component {
         $dataRow->chemical_bod = $chemical_bod;
         $dataRow->chemical_no3n = $chemical_no3n;
         $dataRow->chemical_nh3n = $chemical_nh3n;
+        $dataRow->description = $description;
         if ($this->DataRows->save($dataRow)) {
             return $dataRow->id;
         }
@@ -296,7 +323,7 @@ class ExcelTemplateComponent extends Component {
     public function templateWater() {
         return [
             'highestColumn' => $this->waterColumn,
-            'fomula' => [0, 0, 0, 0.4, 2.0, 5.0, 0.5, 0.05, 0.01, 0.01, 0.01, 0.05, 0.05, 0.05, 0.002, 0.01, 1.0, 0, 20000, 4000, 0, 0, 0],
+            'fomula' => [0, 0, 0, 4, 2.0, 5.0, 0.5, 0.05, 0.01, 0.01, 0.01, 0.05, 0.05, 0.05, 0.002, 0.01, 1.0, 0, 20000, 4000, 0, 0, 0],
             'header' => [
                 'rows' => [
                     ['column' => [
@@ -374,6 +401,41 @@ class ExcelTemplateComponent extends Component {
                             ['title' => 'N', 'colspan' => 0, 'rowspan' => 0],
                         ]
                     ],
+                ]
+            ]
+        ];
+    }
+
+    public function templatePlant() {
+        return [
+            'highestColumn' => $this->plantColumn,
+            'fomula' => [],
+            'header' => [
+                'rows' => [
+                    ['column' => [
+                            ['title' => 'ลำดับ', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'ศูนย์/สถานี', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'ชื่อเกษตรกร', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'รหัสเกษตรกร', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'รหัสตัวอย่าง', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'ปี', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'ชนิดพืช', 'colspan' => 0, 'rowspan' => 3],
+                            ['title' => 'ผลการทดสอบโลหะหนัก', 'colspan' => 3, 'rowspan' => 0],
+                            ['title' => 'หมายเหตุ', 'colspan' => 0, 'rowspan' => 3]
+                        ]
+                    ],
+                    ['column' => [
+                            ['title' => 'As', 'colspan' => 0, 'rowspan' => 0],
+                            ['title' => 'Cd', 'colspan' => 0, 'rowspan' => 0],
+                            ['title' => 'Pb', 'colspan' => 0, 'rowspan' => 0]
+                        ]
+                    ],
+                    ['column' => [
+                            ['title' => '2 mg/kg', 'colspan' => 0, 'rowspan' => 0],
+                            ['title' => '0.05 mg/kg', 'colspan' => 0, 'rowspan' => 0],
+                            ['title' => '1 mg/kg', 'colspan' => 0, 'rowspan' => 0]
+                        ]
+                    ]
                 ]
             ]
         ];

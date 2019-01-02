@@ -249,14 +249,31 @@ class DatasController extends AppController {
     }
 
     public function view($id = null) {
+        $this->loadComponent('Excel');
+        $this->loadComponent('ExcelTemplate');
         $data = $this->Datas->get($id, [
             'contain' => ['Users', 'DataSheets' => ['DataRows']]
         ]);
-        //$this->log($data, 'debug');
-        $this->set('data', $data);
+        
+        /*$this->set('data', $data);
         $this->set('form1', $this->form1);
         $this->set('form2', $this->form2);
         $this->set('form3', $this->form3);
+         * 
+         */
+        foreach ($data['data_sheets'] as $key=> $item){
+            $template = null;
+            if($item['header'] == 'WATER'){
+                $template = $this->ExcelTemplate->templateWater();
+            }elseif($item['header'] == 'SOIL'){
+                $template = $this->ExcelTemplate->templateSoil();
+            }elseif($item['header'] == 'PLANT'){
+                $template = $this->ExcelTemplate->templatePlant();
+            }
+            $data['data_sheets'][$key]['template'] = $template;
+        }
+        //$this->log($data, 'debug');
+        $this->set('data', $data);
     }
     
     public function mapView($sheetId=null){

@@ -1,0 +1,1 @@
+2019-01-02 13:41:40 Debug: select * from data_sheets ds join data_rows dr on ds.id=dr.data_sheet_id where true = true and dr.year = 2554 
