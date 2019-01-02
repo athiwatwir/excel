@@ -241,10 +241,10 @@ class DatasController extends AppController {
     }
 
     public function index() {
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $datas = $this->paginate($this->Datas);
+        $q = $this->Datas->find()
+                ->contain(['Users'])
+                ->order(['Datas.created'=>'DESC']);
+        $datas = $q->toArray();
         $this->set(compact('datas'));
     }
 

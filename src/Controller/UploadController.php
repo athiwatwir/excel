@@ -17,8 +17,6 @@ class UploadController extends AppController {
     public function index($taskId = '') {
         $status = 'DR';
 
-        
-
         if ($this->request->is(['post'])) {
             $postData = $this->request->getData();
             $taskId = $postData['taskid'];

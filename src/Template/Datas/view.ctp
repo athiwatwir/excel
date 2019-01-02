@@ -18,7 +18,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-lg-12">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs" id="ul-tab">
                         <?php foreach ($data['data_sheets'] as $key => $item): ?>
                             <li class="nav-item">
                                 <?php
@@ -84,14 +84,22 @@
         var tables_data = export_tables.getExportData();
         var export_data = [];
         var xlsx_info = {};
+        
         for (table_id in tables_data) {
             xlsx_info = tables_data[table_id]["xlsx"];
             export_data.push(tables_data[table_id]["xlsx"].data);
         }
+        
+        var liObj = $('#ul-tab > li');
+        var sheet_names = [];
+        $.each(liObj,function(key,item){
+            sheet_names.push($.trim($(this).text()));
+        });
+       
         var fileExtension = xlsx_info.fileExtension;
         var mimeType = xlsx_info.mimeType;
         $("#export_btn").click(function () {
-            export_tables.exportmultisheet(export_data, mimeType, "Test Export", ["week plan", "person"],
+            export_tables.exportmultisheet(export_data, mimeType, "Export", sheet_names,
                     fileExtension, {}, []);
         });
 

@@ -162,6 +162,8 @@ class ExcelTemplateComponent extends Component {
 
         return $res;
     }
+    
+    
 
     private function createData($name) {
 
