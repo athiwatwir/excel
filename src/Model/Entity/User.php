@@ -2,12 +2,13 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Auth\DefaultPasswordHasher;
+
 /**
  * User Entity
  *
  * @property string $id
  * @property string $usercode
+ * @property string $username
  * @property string $title
  * @property string $firstname
  * @property string $lastname
@@ -22,7 +23,6 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $position
  * @property string $image_id
  *
- * @property \App\Model\Entity\Image $image
  * @property \App\Model\Entity\Data[] $datas
  */
 class User extends Entity
@@ -39,6 +39,7 @@ class User extends Entity
      */
     protected $_accessible = [
         'usercode' => true,
+        'username' => true,
         'title' => true,
         'firstname' => true,
         'lastname' => true,
@@ -52,7 +53,6 @@ class User extends Entity
         'verifycode' => true,
         'position' => true,
         'image_id' => true,
-        'image' => true,
         'datas' => true
     ];
 
@@ -64,7 +64,4 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
-       protected function _setPassword($password) {
-        return (new DefaultPasswordHasher)->hash($password);
-    }
 }

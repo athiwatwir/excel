@@ -97,7 +97,7 @@
 
         <?= $this->Html->script('/assetdist/plugins/skyicons/skycons.min.js'); ?>
         <!-- Page js  -->
-        <?= $this->Html->script('/assetdist/pages/jquery.dashboard.js'); ?>
+        
 
 
         <!-- Custom main Js -->

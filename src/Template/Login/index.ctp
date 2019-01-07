@@ -15,10 +15,10 @@
             <div class="col-12">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="mdi mdi-email"></i></div>
+                        <div class="input-group-text"><i class="mdi mdi-account-box"></i></div>
                     </div>
 
-                    <input type="email" name="email" class="form-control" id="emai" placeholder="Email">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="username">
                 </div>
             </div>
         </div>

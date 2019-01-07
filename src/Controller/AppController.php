@@ -18,7 +18,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-
+use Cake\Core\Configure;
+use Ldap\Auth\LdapAuthenticate;
 /**
  * Application Controller
  *
@@ -67,8 +68,25 @@ class AppController extends Controller {
                 'action' => 'index'
             ],
             'authenticate' => [
-                'Form' => [
-                    'fields' => ['username' => 'email', 'password' => 'password']
+                
+                'Ldap.Ldap' => [
+                    'fields' => [
+                        'username' => 'username',
+                        'password' => 'password'
+                    ],
+                    'port' => Configure::read('Ldap.port'),
+                    'host' => Configure::read('Ldap.host'),
+                    'domain' => Configure::read('Ldap.domain'),
+                    'baseDN' => Configure::read('Ldap.baseDN'),
+                    'bindDN' => Configure::read('Ldap.bindDN'),
+                    'search' => Configure::read('Ldap.search'),
+                    'errors' => Configure::read('Ldap.errors'),
+                    'logErrors' => Configure::read('Ldap.logErrors'),
+                    'options' => Configure::read('Ldap.options'),
+                    'flash' => [
+                        'key' => 'ldap',
+                        'element' => 'Flash/error',
+                    ]
                 ]
             ],
             'storage' => 'Session'

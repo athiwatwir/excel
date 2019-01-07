@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\ImagesTable|\Cake\ORM\Association\BelongsTo $Images
+ * @property |\Cake\ORM\Association\BelongsTo $Images
  * @property \App\Model\Table\DatasTable|\Cake\ORM\Association\HasMany $Datas
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
@@ -42,9 +42,9 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-//        $this->belongsTo('Images', [
-//            'foreignKey' => 'image_id'
-//        ]);
+        $this->belongsTo('Images', [
+            'foreignKey' => 'image_id'
+        ]);
         $this->hasMany('Datas', [
             'foreignKey' => 'user_id'
         ]);
@@ -66,6 +66,11 @@ class UsersTable extends Table
             ->scalar('usercode')
             ->maxLength('usercode', 100)
             ->allowEmpty('usercode');
+
+        $validator
+            ->scalar('username')
+            ->maxLength('username', 45)
+            ->allowEmpty('username');
 
         $validator
             ->scalar('title')
@@ -92,8 +97,7 @@ class UsersTable extends Table
 
         $validator
             ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->allowEmpty('email');
 
         $validator
             ->scalar('phone')
@@ -130,8 +134,9 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
-       // $rules->add($rules->existsIn(['image_id'], 'Images'));
+        $rules->add($rules->existsIn(['image_id'], 'Images'));
 
         return $rules;
     }

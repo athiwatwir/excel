@@ -42,7 +42,7 @@ $( document ).ready(function() {
             type: 'pie',
             width: '200',
             height: '200',
-            sliceColors: ['#dcdcdc', '#3bafda', '#333333', '#00b19d']
+            sliceColors: ['#E65100', '#3bafda', '#333333', '#00b19d']
         });
 
 

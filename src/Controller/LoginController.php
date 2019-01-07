@@ -6,6 +6,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Email\Email;
+use Ldap\Auth\LdapAuthenticate;
 
 /**
  * Login Controller
@@ -21,70 +22,34 @@ class LoginController extends AppController {
         parent::beforeFilter($event);
 
         $this->Users = TableRegistry::get('Users');
-        
     }
 
+    
     public function index() {
         $this->viewBuilder()->setLayout('login');
 
-        $urlName = env('SERVER_NAME');
-        //if ($_SERVER['REQUEST_SCHEME'] == 'http' || (!$this->startsWith($urlName, 'www') && $urlName != '127.0.0.1')) {
-        //return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
-        //return $this->redirect(SITE_URL);
-        //}
-        //Check if already login
         if (!(is_null($this->request->getSession()->read('Auth.User')))) {
-         //   return $this->redirect(DEFAULT_HOME_URL);
             return $this->redirect($this->Auth->redirectUrl());
         }
-
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
             $user = $this->Auth->identify();
-
-
+            if ($user) {
+                
+            } else {
+                $user = $this->Users->find()
+                        ->where(['username' => $data['username'], 'password' => $data['password']])
+                        ->first();
+            }
 
             if ($user) {
-                $user = $this->Users->get($user['id'], ['contain' => []]);
-            //    return $this->redirect(DEFAULT_HOME_URL);
-               $this->Auth->setUser($user);
+                $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             } else {
                 $this->Flash->error(__('Invalid email or password, try again'));
                 return $this->redirect(['controller' => 'login']);
             }
-        }
-    }
-
-    public function verifyclient($user_id = null) {
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-
-            $systemUse = $this->SystemUsages->newEntity();
-            $systemUse->user_id = $user_id;
-            $systemUse->ipaddress = $data['ip'];
-            $systemUse->isactive = 'Y';
-            $description = $data['address'] . '[ ' . $data['lat'] . ',' . $data['long'] . ']';
-            $systemUse->description = $description;
-            $result = $this->SystemUsages->save($systemUse);
-            if ($result) {
-                $this->request->session()->write('SystemUsages.id', $systemUse->id);
-                //return $systemUse->id;
-                return $this->redirect(DEFAULT_HOME_URL);
-            }
-        }
-    }
-
-    private function startsWith($haystack, $needle) {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
-    }
-
-    private function endsWith($haystack, $needle) {
-        $length = strlen($needle);
-        if ($length == 0) {
-            return true;
         }
     }
 

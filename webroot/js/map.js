@@ -92,7 +92,25 @@ function addNewMarkerBlue(lat, lng, name) {
             fontWeight: "bold"
         },
         icon: {
-            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+            url: "http://maps.google.com/mapfiles/ms/micons/green-dot.png"
+        }
+    });
+}
+function addNewMarkerRed(lat, lng, name) {
+    console.log(lat);
+    var myLatLng = new google.maps.LatLng(lat, lng);
+    var assetMarker = new google.maps.Marker({
+        map: map,
+        draggable: false,
+        animation: google.maps.Animation.DROP,
+        position: myLatLng,
+        label: {
+            text: name,
+            color: "#424242",
+            fontWeight: "bold"
+        },
+        icon: {
+            url: "http://maps.google.com/mapfiles/ms/micons/red-dot.png"
         }
     });
 }

@@ -21,6 +21,7 @@ require __DIR__ . '/app_config.php';
 require __DIR__ . '/constants.php';
 require ROOT. DS .'vendor'.DS.'phpexcel'.DS.'Classes'.DS.'PHPExcel.php';
 require ROOT. DS .'vendor'.DS.'phpexcel'.DS.'Classes'.DS.'PHPExcel'.DS.'IOFactory.php';
+require ROOT. DS .'vendor'.DS.'LDAP-3.2.6'.DS.'src'.DS.'Auth'.DS.'LdapAuthenticate.php';
 /*
  * Bootstrap CakePHP.
  *

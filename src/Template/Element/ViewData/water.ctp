@@ -82,7 +82,7 @@
         <tbody>
             <?php
             $template = $sheet['template'];
-            $fomula = $template['fomula'];
+            $fomula = $template['formula'];
             $columns = ['seq', 'fullname', 'year', 'chemical_do', 'chemical_bod', 'chemical_no3n', 'chemical_nh3n', 'oc_weight', 'op_weight', 'ca_weight',
                 'py_weight', 'ppm_cd', 'ppm_cr', 'ppm_pb', 'ppm_hg', 'ppm_as', 'nutrient_cu', 'nutrient_ca', 'coliform',
                 'fecal', 'coordinates_e', 'coordinates_n', 'high'];
@@ -102,7 +102,7 @@
                         <?php if ($fomula[$key] != 0 && is_numeric($row[$column]) && $row[$column] > $fomula[$key]) { ?>
                             <td class="text-danger"><strong><?= h($row[$column]) ?></strong></td>
                                 <?php } else { ?>
-                            <td><?= h($row[$column]) ?></td>
+                            <td><?=($key==1 && $row['status']=='F')?'<i class="mdi mdi-alert-circle text-danger"></i>':''?><?= h($row[$column]) ?></td>
                         <?php } ?>
                     <?php endforeach; ?>
                 </tr>

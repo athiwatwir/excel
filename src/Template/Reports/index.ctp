@@ -87,7 +87,7 @@ crossorigin=""></script>
                             </thead>
                             <tbody>
                                 <?php foreach ($result as $key=>$item):?>
-                                <tr>
+                                <tr class="<?=$item['status']=='F'?'text-danger':''?>">
                                     <td><?=($key+1)?></td>
                                     <td><?=h($item['fullname'])?></td>
                                     <td><?=h($item['year'])?></td>
@@ -135,7 +135,12 @@ crossorigin=""></script>
                 if (key == 0) {
                     setCenter(latLong.lat, latLong.lng);
                 }
-                addNewMarkerBlue(latLong.lat, latLong.lng, value.fullname);
+                if(value.status =='F'){
+                    addNewMarkerRed(latLong.lat, latLong.lng, value.fullname);
+                }else{
+                    addNewMarkerBlue(latLong.lat, latLong.lng, value.fullname);
+                }
+                
             });
 
 
