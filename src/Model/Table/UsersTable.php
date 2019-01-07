@@ -9,7 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Images
  * @property \App\Model\Table\DatasTable|\Cake\ORM\Association\HasMany $Datas
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
@@ -42,9 +41,6 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Images', [
-            'foreignKey' => 'image_id'
-        ]);
         $this->hasMany('Datas', [
             'foreignKey' => 'user_id'
         ]);
@@ -136,7 +132,6 @@ class UsersTable extends Table
     {
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['image_id'], 'Images'));
 
         return $rules;
     }

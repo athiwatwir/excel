@@ -32,7 +32,6 @@ class UsersFixture extends TestFixture
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'verifycode' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'position' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'image_id' => ['type' => 'uuid', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -52,7 +51,7 @@ class UsersFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => '77a3e053-6f3b-46e8-b19d-a9ce5733417f',
+                'id' => '6119fe82-397c-4442-967c-e448f946ef04',
                 'usercode' => 'Lorem ipsum dolor sit amet',
                 'username' => 'Lorem ipsum dolor sit amet',
                 'title' => 'Lorem ipsum dolor sit amet',
@@ -63,11 +62,10 @@ class UsersFixture extends TestFixture
                 'phone' => 'Lorem ipsum dolor sit amet',
                 'isactive' => 'Lorem ipsum dolor sit amet',
                 'gender' => 'Lorem ipsum dolor sit amet',
-                'created' => '2019-01-05 13:25:26',
-                'updated' => '2019-01-05 13:25:26',
+                'created' => '2019-01-07 11:22:50',
+                'updated' => '2019-01-07 11:22:50',
                 'verifycode' => 'Lorem ipsum dolor sit amet',
-                'position' => 'Lorem ipsum dolor sit amet',
-                'image_id' => 'e30f7d19-5aeb-495b-878c-04e1db084e76'
+                'position' => 'Lorem ipsum dolor sit amet'
             ],
         ];
         parent::init();

@@ -95,12 +95,12 @@ return [
         },
         //'host' => '127.0.0.1',
         'port' => 389,
-        'search' => 'UserPrincipalName',
+        'search' => 'mail',
         'baseDN' => function($username, $domain) {
             if (strpos($username, $domain) !== false) {
-                $baseDN = 'dc=corp,dc=acme,dc=org';
+                $baseDN = 'dc=hrdi,dc=or,dc=th';
             } else {
-                $baseDN = 'dc=corp,dc=acme,dc=org';
+                $baseDN = 'dc=hrdi,dc=or,dc=th';
             }
             return $baseDN;
         },
@@ -114,7 +114,7 @@ return [
             LDAP_OPT_NETWORK_TIMEOUT => 10,
             LDAP_OPT_PROTOCOL_VERSION => 3,
             LDAP_OPT_REFERRALS =>0,
-            
+            LDAP_OPT_SIZELIMIT=>100000
             
         ]
     ],

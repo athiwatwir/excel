@@ -151,7 +151,7 @@ class LdapAuthenticate extends BaseAuthenticate {
         if (!empty($this->_config['domain']) && !empty($username) && strpos($username, '@') === false) {
             $username .= '@' . $this->_config['domain'];
         }
-        $this->log($username, 'debug');
+        
 
         set_error_handler(
                 function ($errorNumber, $errorText, $errorFile, $errorLine) {
@@ -162,12 +162,16 @@ class LdapAuthenticate extends BaseAuthenticate {
         //$this->log(ldap_bind($this->ldapConnection, isset($this->_config['bindDN']) ? $this->_config['bindDN']($username, $this->_config['domain']) : $username, $password),'debug');
        // $this->log($password,'debug');
         try {
+            //$this->log($username, 'debug');
             $ldapBind = ldap_bind($this->ldapConnection, isset($this->_config['bindDN']) ? $this->_config['bindDN']($username, $this->_config['domain']) : $username, $password);
             if ($ldapBind === true) {
-                $searchResults = ldap_search($this->ldapConnection, $this->_config['baseDN']($username, $this->_config['domain']), '(' . $this->_config['search'] . '=' . $username . ')');
-                $entry = ldap_first_entry($this->ldapConnection, $searchResults);
-
-                return ldap_get_attributes($this->ldapConnection, $entry);
+                //$searchResults = ldap_search($this->ldapConnection, $this->_config['baseDN']($username, $this->_config['domain']), '(' . $this->_config['search'] . '=' . $username . '*)');
+                //ldap_control_paged_result($this->ldapConnection, 3);
+                //$searchResults = ldap_search($this->ldapConnection, $this->_config['baseDN']($username, $this->_config['domain']), '(objectClass=top)');
+                //$entry = ldap_first_entry($this->ldapConnection, $searchResults);
+                
+                //return ldap_get_attributes($this->ldapConnection, $entry);
+                return ['email'=>$username];
             }
         } catch (ErrorException $e) {
             if ($this->logErrors === true) {
