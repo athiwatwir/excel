@@ -1,75 +1,63 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Datas'), ['controller' => 'Datas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Data'), ['controller' => 'Datas', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users index large-9 medium-8 columns content">
-    <h3><?= __('Users') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('usercode') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('title') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('firstname') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('lastname') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('password') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('isactive') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('gender') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('updated') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('verifycode') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('position') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('image_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?= h($user->id) ?></td>
-                <td><?= h($user->usercode) ?></td>
-                <td><?= h($user->title) ?></td>
-                <td><?= h($user->firstname) ?></td>
-                <td><?= h($user->lastname) ?></td>
-                <td><?= h($user->password) ?></td>
-                <td><?= h($user->email) ?></td>
-                <td><?= h($user->phone) ?></td>
-                <td><?= h($user->isactive) ?></td>
-                <td><?= h($user->gender) ?></td>
-                <td><?= h($user->created) ?></td>
-                <td><?= h($user->updated) ?></td>
-                <td><?= h($user->verifycode) ?></td>
-                <td><?= h($user->position) ?></td>
-                <td><?= h($user->image_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<?= $this->element('Lib/data_table') ?>
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-6"><h2 class="prompt-400 text-primary"><i class="mdi mdi-account-network"></i> ผู้ใช้งาน </h2></div>
+                <div class="col-md-6 text-right">
+                    <?= $this->Html->link('อัพเดชรายชื่อจาก AD', ['controller' => 'users', 'action' => 'ad-update'], ['id' => 'bt_update_ad_user', 'class' => 'btn btn-primary waves-effect waves-light right-align', 'escape' => false]) ?>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card-box">
+            <table class="table table-sm table-hover" id="datatable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>ชื่อผู้ใช้งาน</th>
+                        <th>Email</th>
+                        <th>รายละเอียด</th>
+                        <th style="width: 100px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $key => $user): ?>
+                        <tr>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= h($user->fullname) ?></td>
+                            <td><?= h($user->username) ?></td>
+                            <td><?= h($user->email) ?></td>
+                            <td><?= h($user->description) ?></td>
+
+                            <td class="actions">
+                                <?=$this->Html->link('<i class="fa fa-pencil"></i> ตั้งค่า',['controller'=>'users','action'=>'setting',$user->id],[
+                                    'class'=>'on-default','data-toggle'=>'tooltip','data-placement'=>'top',
+                                    'data-original-title'=>'ตั้งค่า','escape'=>false
+                                    ])?>
+                                
+                            </td>
+
+                        </tr>
+
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#bt_update_ad_user').on('click', function () {
+            $('#page-load').show();
+        });
+
+    });
+</script>

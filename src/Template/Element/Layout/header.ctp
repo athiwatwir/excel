@@ -54,6 +54,9 @@
                     <li class="has-submenu">
                         <?=$this->Html->link('<i class="fa fa-pie-chart"></i><span> รายงาน </span>',['controller'=>'reports'],['class'=>'waves-effect waves-primary','escape'=>false])?>
                     </li>
+                    <li class="has-submenu">
+                        <?=$this->Html->link('<i class="mdi mdi-account-network"></i><span> ผู้ใช้งาน </span>',['controller'=>'users'],['class'=>'waves-effect waves-primary','escape'=>false])?>
+                    </li>
                 </ul>
             </div> 
         </div> 

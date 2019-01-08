@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-use Cake\Network\Email\Email;
-use Ldap\Auth\LdapAuthenticate;
-use Cake\Auth\DefaultPasswordHasher;
+use Adldap\Adldap;
+use Cake\Core\Configure;
+
 /**
  * Login Controller
  *
@@ -23,7 +23,7 @@ class LoginController extends AppController {
 
         $this->Users = TableRegistry::get('Users');
     }
-    
+
     public function index() {
         $this->viewBuilder()->setLayout('login');
 
@@ -33,26 +33,13 @@ class LoginController extends AppController {
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->log('Loged with AD','debug');
-                $username = $data['username'];
-                $email = $user['email'];
+            $configuration = Configure::read('LDAP');
+            $ad = new Adldap($configuration);
+            $authenticated = $ad->authenticate($data['username'], $data['password']);
+            
 
-                $user = $this->Users->find()
-                        ->where(['email' => $user['email']])
-                        ->first();
-                if (!$user) {
-                    $user = $this->Users->newEntity();
-                    $user->username = $username;
-                    $user->email = $email;
-                    $user->firstname = $username;
-                    $user->lastname = $username;
-                    $user->password = '0000';
-                    $this->Users->save($user);
-                }
-            } 
-            if ($user) {
+            if ($authenticated) {
+                $user = $this->Users->find()->where(['Users.username'=>$data['username']])->first();
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             } else {
@@ -61,55 +48,6 @@ class LoginController extends AppController {
             }
         }
     }
-
-    /*
-    public function index() {
-        $this->viewBuilder()->setLayout('login');
-
-        if (!(is_null($this->request->getSession()->read('Auth.User')))) {
-            return $this->redirect($this->Auth->redirectUrl());
-        }
-
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->log('Loged with AD','debug');
-                $username = $data['username'];
-                $email = $user['email'];
-
-                $user = $this->Users->find()
-                        ->where(['email' => $user['email']])
-                        ->first();
-                if (!$user) {
-                    $user = $this->Users->newEntity();
-                    $user->username = $username;
-                    $user->email = $email;
-                    $user->firstname = $username;
-                    $user->lastname = $username;
-                    $user->password = '0000';
-                    $this->Users->save($user);
-                }
-            } else {
-                $this->log('Loged with Normal','debug');
-                $password = $data['password'];
-                $password = (new DefaultPasswordHasher)->hash($password);
-                $user = $this->Users->find()
-                        ->where(['username' => $data['username'], 'password' => $password])
-                        ->first();
-            }
-            $this->log($user, 'debug');
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
-            } else {
-                $this->Flash->error(__('Invalid email or password, try again'));
-                return $this->redirect(['controller' => 'login']);
-            }
-        }
-    }
-     * 
-     */
 
     public function recoverpw() {
         $this->viewBuilder()->setLayout('login');

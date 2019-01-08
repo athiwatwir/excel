@@ -74,22 +74,15 @@ class UsersTable extends Table
             ->allowEmpty('title');
 
         $validator
-            ->scalar('firstname')
-            ->maxLength('firstname', 100)
-            ->requirePresence('firstname', 'create')
-            ->notEmpty('firstname');
-
-        $validator
-            ->scalar('lastname')
-            ->maxLength('lastname', 100)
-            ->requirePresence('lastname', 'create')
-            ->notEmpty('lastname');
+            ->scalar('fullname')
+            ->maxLength('fullname', 100)
+            ->requirePresence('fullname', 'create')
+            ->notEmpty('fullname');
 
         $validator
             ->scalar('password')
             ->maxLength('password', 100)
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->allowEmpty('password');
 
         $validator
             ->email('email')
@@ -117,6 +110,11 @@ class UsersTable extends Table
             ->scalar('position')
             ->maxLength('position', 100)
             ->allowEmpty('position');
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 255)
+            ->allowEmpty('description');
 
         return $validator;
     }

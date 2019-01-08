@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Core\Configure;
+
 define('DEFAULT_USER', '0');
 define('PAGE_TITLE', 'Soil and Water Database System');
 define('MAP_API_KEY', 'AIzaSyBlBNYnIC9qGPT2dEMmbpnPFMYtFbqaXpM');
@@ -43,3 +45,17 @@ define('MONTH_FORMATE', 'M');
 define('MSG_DELETE_SUCCESS', 'ลบข้อมูลแล้ว');
 define('MSG_DELETE_ERROR', 'ไม่สามารถลบข้อมูลได้');
 define('MSG_DELETE_NOTFOUND', 'ไม่พบข้อมูลหรือข้อมูลโดนลบไปแล้วโดยผู้ใช้งานอื่น');
+
+Configure::write('LDAP', [
+    'account_suffix' => "@hrdi.or.th",
+    'domain_controllers' => array("ad01.hrdi.or.th"),
+    'base_dn' => 'dc=hrdi,dc=or,dc=th',
+    'admin_username' => 'swdb',
+    'admin_password' => 'EaRb59hY',
+    'real_primarygroup' => true,
+    'use_ssl' => false,
+    'use_tls' => false,
+    'recursive_groups' => true,
+    'ad_port' => '389',
+    'sso' => false,
+]);

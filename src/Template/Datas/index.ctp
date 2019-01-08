@@ -4,7 +4,7 @@
         <div class="card m-b-20 card-body">
             <div class="form-group row ">
                 <div class="col-md-6 ">
-                    <h2 class="prompt-400 "><i class="fa fa-cogs"></i> ประวัติการอัพโหลด</h2>
+                    <h2 class="prompt-400 text-primary"><i class="fa fa-cogs"></i> ประวัติการอัพโหลด</h2>
                 </div>
             </div>
             <table id="datatable" class="table table-responsive-lg table-responsive-sm" cellspacing="0"  width="100%">

@@ -85,39 +85,7 @@ return [
      *
      * @link http://php.net/manual/en/function.ldap-search.php - for more info on ldap search
      */
-    'Ldap' => [
-        'domain' => 'hrdi.or.th',
-        'host' => function() {
-            //$hosts = ['corp-dc1.corp.acme.org','corp-dc2.corp.acme.org'];
-            $hosts = ['ad01.hrdi.or.th'];
-            shuffle($hosts);
-            return $hosts[0];
-        },
-        //'host' => '127.0.0.1',
-        'port' => 389,
-        'search' => 'mail',
-        'baseDN' => function($username, $domain) {
-            if (strpos($username, $domain) !== false) {
-                $baseDN = 'dc=hrdi,dc=or,dc=th';
-            } else {
-                $baseDN = 'dc=hrdi,dc=or,dc=th';
-            }
-            return $baseDN;
-        },
-        
-        'errors' => [
-            'data 773' => 'Some error for Flash',
-            'data 532' => 'Some error for Flash',
-        ],
-        'logErrors' => true,
-        'options' => [
-            LDAP_OPT_NETWORK_TIMEOUT => 10,
-            LDAP_OPT_PROTOCOL_VERSION => 3,
-            LDAP_OPT_REFERRALS =>0,
-            LDAP_OPT_SIZELIMIT=>100000
-            
-        ]
-    ],
+   
     /**
      * Security and encryption configuration
      *

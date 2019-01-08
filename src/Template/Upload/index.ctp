@@ -8,7 +8,7 @@
 
                 <div class="form-group row ">
                     <div class="col-12 ">
-                        <h2 class="prompt-400 "><i class="fa fa-cloud-upload"></i> อัพโหลดข้อมูล </h2>
+                        <h2 class="prompt-400 text-primary"><i class="fa fa-cloud-upload"></i> อัพโหลดข้อมูล </h2>
                     </div>
                 </div>
                 <div class="row">
@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card m-b-20 card-body">
-                <h2 class="prompt-400 "><i class="fa fa-cloud-upload"></i> ผลการอัพข้อมูล </h2>
+                <h2 class="prompt-400 text-primary"><i class="fa fa-cloud-upload"></i> ผลการอัพข้อมูล </h2>
                 <table class="table table-sm" id="tb_result">
                     <thead>
                         <tr>

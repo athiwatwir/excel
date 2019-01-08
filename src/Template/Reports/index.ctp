@@ -9,7 +9,7 @@ crossorigin=""></script>
 
             <div class="form-group row ">
                 <div class="col-12 ">
-                    <h2 class="prompt-400 "><i class="fa fa-cloud-upload"></i> รายงาน </h2>
+                    <h2 class="prompt-400 text-primary"><i class="fa fa-cloud-upload"></i> รายงาน </h2>
                 </div>
             </div>
             <?= $this->Form->create('') ?>
@@ -25,10 +25,17 @@ crossorigin=""></script>
                         <label for="soli">
                             รวมดิน
                         </label>
-                    </div><div class="checkbox checkbox-primary">
+                    </div>
+                    <div class="checkbox checkbox-primary">
                         <input id="water" type="checkbox" name="type[]" value="WATER">
                         <label for="water">
                             รวมน้ำ
+                        </label>
+                    </div>
+                    <div class="checkbox checkbox-primary">
+                        <input id="plant" type="checkbox" name="type[]" value="PLANT">
+                        <label for="plant">
+                            รวมพืช
                         </label>
                     </div>
                 </div>

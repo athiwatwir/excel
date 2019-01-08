@@ -67,28 +67,7 @@ class AppController extends Controller {
                 'controller' => 'login',
                 'action' => 'index'
             ],
-            'authenticate' => [
-                
-                'Ldap.Ldap' => [
-                    'fields' => [
-                        'username' => 'username',
-                        'password' => 'password'
-                    ],
-                    'port' => Configure::read('Ldap.port'),
-                    'host' => Configure::read('Ldap.host'),
-                    'domain' => Configure::read('Ldap.domain'),
-                    'baseDN' => Configure::read('Ldap.baseDN'),
-                    'bindDN' => Configure::read('Ldap.bindDN'),
-                    'search' => Configure::read('Ldap.search'),
-                    'errors' => Configure::read('Ldap.errors'),
-                    'logErrors' => Configure::read('Ldap.logErrors'),
-                    'options' => Configure::read('Ldap.options'),
-                    'flash' => [
-                        'key' => 'ldap',
-                        'element' => 'Flash/error',
-                    ]
-                ]
-            ],
+            
             'storage' => 'Session'
         ]);
         /*
