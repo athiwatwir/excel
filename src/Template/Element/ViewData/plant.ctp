@@ -28,23 +28,26 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($sheet['data_rows'] as $row):?>
-            <tr>
-                <td><?=h($row['seq'])?></td>
-                <td><?=h($row['office_center'])?></td>
-                <td><?=h($row['fullname'])?></td>
-                <td><?=h($row['farmer_code'])?></td>
-                <td><?=h($row['code'])?></td>
-                <td><?=h($row['year'])?></td>
-                <td><?=h($row['plant_type'])?></td>
-                <td><?=h($row['ppm_as'])?></td>
-                <td><?=h($row['ppm_cd'])?></td>
-                <td><?=h($row['ppm_pb'])?></td>
-                <td><?=h($row['description'])?></td>
-            </tr>
+            <?php
             
-            <?php endforeach;?>
+            $template = $sheet['template'];
+            $formula = $template['formula'];
+            
+            $columns = ['seq', 'office_center', 'fullname','farmer_code','code','year','plant_type','ppm_as','ppm_cd','ppm_pb','description'];
+            ?>
+            <?php foreach ($sheet['data_rows'] as $row): ?>
+                <tr>
+                    <?php foreach ($columns as $key => $column): ?>
+                        <?php if ($formula[$key] != 0 && is_numeric($row[$column]) && $row[$column] > $formula[$key]) { ?>
+                    <td class="text-danger"><strong><?= h($row[$column]) ?></strong></td>
+                        <?php } else { ?>
+                            <td><?=($key==1 && $row['status']=='F')?'<i class="mdi mdi-alert-circle text-danger"></i>':''?><?= h($row[$column]) ?></td>
+                        <?php } ?>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
+
 
     </table>
     

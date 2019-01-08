@@ -162,6 +162,9 @@ class ExcelTemplateComponent extends Component {
                     $count++;
                 }
             } elseif ($sheet['highest_column'] == $this->plantColumn) {
+                $template = $this->templatePlant();
+                $formula = $template['formula'];
+                
                 //Get title
                 $title = $sheet['rows'][0][0];
 
@@ -323,7 +326,7 @@ class ExcelTemplateComponent extends Component {
     public function templatePlant() {
         return [
             'highestColumn' => $this->plantColumn,
-            'formula' => [],
+            'formula' => [0,0,0,0,0,0,0,2,0.05,1,0],
         ];
     }
 
